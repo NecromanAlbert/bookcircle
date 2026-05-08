@@ -63,27 +63,27 @@ export function AnnotationSidebar({ annotations, onClose }: Props) {
   }
 
   return (
-    <div className="w-full sm:w-80 border-l border-white/10 bg-[var(--bg-secondary)] flex flex-col shrink-0 h-full">
-      <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
-        <h3 className="text-sm font-semibold">标注 ({annotations.length})</h3>
+    <div className="w-full sm:w-80 border-l border-[var(--border)] bg-[var(--bg-card)] flex flex-col shrink-0 h-full">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--border)]">
+        <h3 className="text-sm font-semibold text-[var(--text-primary)]">标注 ({annotations.length})</h3>
         <button
           onClick={onClose}
-          className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] bg-transparent border-none cursor-pointer text-lg"
+          className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] bg-transparent border-none cursor-pointer text-lg leading-none"
         >
           ×
         </button>
       </div>
 
       {hasFriendAnnotations && (
-        <div className="flex flex-wrap gap-2 px-4 py-2 border-b border-white/10">
+        <div className="flex flex-wrap gap-2 px-4 py-2 border-b border-[var(--border)]">
           {Array.from(authors.entries()).map(([userId, name]) => (
             <button
               key={userId}
               onClick={() => toggleUser(userId)}
-              className={`px-2 py-0.5 text-xs rounded-full cursor-pointer border transition-colors ${
+              className={`px-2.5 py-1 text-xs rounded-full cursor-pointer border transition-colors ${
                 hiddenUsers.has(userId)
-                  ? 'border-white/10 text-[var(--text-secondary)] bg-transparent'
-                  : 'border-[var(--accent)] text-[var(--accent)] bg-[var(--accent)]/10'
+                  ? 'border-[var(--border)] text-[var(--text-secondary)] bg-transparent'
+                  : 'border-[var(--accent)] text-[var(--accent)] bg-[var(--accent)]/8'
               }`}
             >
               {name}
@@ -100,23 +100,23 @@ export function AnnotationSidebar({ annotations, onClose }: Props) {
               : '所有标注已隐藏'}
           </p>
         ) : (
-          <div className="divide-y divide-white/5">
+          <div className="divide-y divide-[var(--border)]">
             {filtered.map((ann) => {
               const isMine = ann.user_id === user?.id
               return (
                 <div key={ann.id} className="px-4 py-3">
-                  <div className="flex items-start gap-2">
+                  <div className="flex items-start gap-2.5">
                     <div
                       className="w-3 h-3 rounded-full shrink-0 mt-1"
                       style={{ backgroundColor: ann.color }}
                     />
                     <div className="flex-1 min-w-0">
                       {!isMine && (
-                        <p className="text-xs text-[var(--accent)] mb-0.5">
+                        <p className="text-xs text-[var(--accent)] font-medium mb-0.5">
                           {ann.profiles?.display_name ?? '好友'}
                         </p>
                       )}
-                      <p className="text-sm text-[var(--text-primary)] line-clamp-3">
+                      <p className="text-sm text-[var(--text-primary)] line-clamp-3 leading-relaxed">
                         "{ann.selected_text}"
                       </p>
                       {editingId === ann.id ? (
@@ -125,12 +125,12 @@ export function AnnotationSidebar({ annotations, onClose }: Props) {
                             value={editNote}
                             onChange={(e) => setEditNote(e.target.value)}
                             rows={2}
-                            className="w-full px-2 py-1 rounded bg-[var(--bg-card)] border border-white/10 text-xs text-[var(--text-primary)] outline-none resize-none"
+                            className="w-full px-2.5 py-1.5 rounded-lg bg-[var(--bg-secondary)] border border-[var(--border)] text-xs text-[var(--text-primary)] outline-none resize-none focus:border-[var(--accent)]"
                           />
                           <div className="flex gap-2 mt-1">
                             <button
                               onClick={() => handleEditSave(ann.id)}
-                              className="text-xs text-[var(--accent)] bg-transparent border-none cursor-pointer"
+                              className="text-xs text-[var(--accent)] font-medium bg-transparent border-none cursor-pointer"
                             >
                               保存
                             </button>
@@ -145,12 +145,12 @@ export function AnnotationSidebar({ annotations, onClose }: Props) {
                       ) : (
                         <>
                           {ann.note && (
-                            <p className="text-xs text-[var(--text-secondary)] mt-1">
+                            <p className="text-xs text-[var(--text-secondary)] mt-1.5 leading-relaxed">
                               {ann.note}
                             </p>
                           )}
                           {isMine && (
-                            <div className="flex gap-3 mt-1">
+                            <div className="flex gap-3 mt-1.5">
                               <button
                                 onClick={() => {
                                   setEditingId(ann.id)
@@ -162,7 +162,7 @@ export function AnnotationSidebar({ annotations, onClose }: Props) {
                               </button>
                               <button
                                 onClick={() => handleDelete(ann.id)}
-                                className="text-xs text-[var(--text-secondary)] hover:text-red-400 bg-transparent border-none cursor-pointer"
+                                className="text-xs text-[var(--text-secondary)] hover:text-red-500 bg-transparent border-none cursor-pointer"
                               >
                                 删除
                               </button>

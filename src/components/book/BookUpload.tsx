@@ -63,10 +63,10 @@ export function BookUpload({ onUploaded }: Props) {
       onDragOver={(e) => { e.preventDefault(); setDragOver(true) }}
       onDragLeave={() => setDragOver(false)}
       onDrop={handleDrop}
-      className={`border-2 border-dashed rounded-lg p-6 text-center cursor-pointer transition-colors ${
+      className={`border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition-all ${
         dragOver
-          ? 'border-[var(--accent)] bg-[var(--accent)]/10'
-          : 'border-white/10 hover:border-white/20'
+          ? 'border-[var(--accent)] bg-[var(--accent)]/5'
+          : 'border-[var(--border)] hover:border-[var(--accent)] hover:bg-[var(--bg-card)]'
       }`}
       onClick={() => fileRef.current?.click()}
     >
@@ -86,9 +86,12 @@ export function BookUpload({ onUploaded }: Props) {
           <span className="text-[var(--text-secondary)]">上传中...</span>
         </div>
       ) : (
-        <p className="text-[var(--text-secondary)]">
-          拖拽或点击上传 EPUB / PDF
-        </p>
+        <div>
+          <p className="text-[var(--text-secondary)]">
+            <span className="text-[var(--accent)] font-medium">点击上传</span> 或拖拽文件到这里
+          </p>
+          <p className="text-xs text-[var(--text-secondary)] mt-1 opacity-60">支持 EPUB、PDF，最大 50MB</p>
+        </div>
       )}
     </div>
   )

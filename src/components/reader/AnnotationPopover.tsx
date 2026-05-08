@@ -14,7 +14,7 @@ export function AnnotationPopover({ selectedText, position, onSave, onCancel }: 
 
   return (
     <div
-      className="fixed z-50 bg-[var(--bg-card)] rounded-lg shadow-xl border border-white/10 p-3 w-72"
+      className="fixed z-50 bg-[var(--bg-card)] rounded-xl shadow-[var(--shadow-lg)] border border-[var(--border)] p-3 w-72"
       style={{ left: position.x, top: position.y }}
     >
       <p className="text-xs text-[var(--text-secondary)] mb-2 line-clamp-2">
@@ -26,10 +26,10 @@ export function AnnotationPopover({ selectedText, position, onSave, onCancel }: 
           <button
             key={c}
             onClick={() => setColor(c)}
-            className="w-6 h-6 rounded-full border-2 cursor-pointer"
+            className="w-6 h-6 rounded-full border-2 cursor-pointer transition-transform hover:scale-110"
             style={{
               backgroundColor: c,
-              borderColor: color === c ? '#fff' : 'transparent',
+              borderColor: color === c ? 'var(--text-primary)' : 'transparent',
             }}
           />
         ))}
@@ -40,19 +40,19 @@ export function AnnotationPopover({ selectedText, position, onSave, onCancel }: 
         onChange={(e) => setNote(e.target.value)}
         placeholder="写点想法...（可选）"
         rows={2}
-        className="w-full px-2 py-1.5 rounded bg-[var(--bg-secondary)] border border-white/10 text-sm text-[var(--text-primary)] placeholder:text-[var(--text-secondary)] outline-none resize-none"
+        className="w-full px-2.5 py-1.5 rounded-lg bg-[var(--bg-secondary)] border border-[var(--border)] text-sm text-[var(--text-primary)] outline-none resize-none focus:border-[var(--accent)]"
       />
 
       <div className="flex justify-end gap-2 mt-2">
         <button
           onClick={onCancel}
-          className="px-3 py-1 text-sm text-[var(--text-secondary)] bg-transparent border-none cursor-pointer hover:text-[var(--text-primary)]"
+          className="px-3 py-1.5 text-sm text-[var(--text-secondary)] bg-transparent border-none cursor-pointer hover:text-[var(--text-primary)]"
         >
           取消
         </button>
         <button
           onClick={() => onSave(color, note)}
-          className="px-3 py-1 text-sm text-white bg-[var(--accent)] rounded cursor-pointer border-none hover:bg-[var(--accent-hover)]"
+          className="px-3 py-1.5 text-sm text-white bg-[var(--accent)] rounded-lg cursor-pointer border-none hover:bg-[var(--accent-hover)] transition-colors"
         >
           保存
         </button>

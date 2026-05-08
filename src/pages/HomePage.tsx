@@ -68,29 +68,27 @@ export function HomePage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex gap-4 border-b border-white/10 w-full">
-          <button
-            onClick={() => setTab('mine')}
-            className={`pb-2 px-1 text-sm border-b-2 bg-transparent cursor-pointer transition-colors ${
-              tab === 'mine'
-                ? 'border-[var(--accent)] text-[var(--text-primary)]'
-                : 'border-transparent text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
-            }`}
-          >
-            我的书架
-          </button>
-          <button
-            onClick={() => setTab('friends')}
-            className={`pb-2 px-1 text-sm border-b-2 bg-transparent cursor-pointer transition-colors ${
-              tab === 'friends'
-                ? 'border-[var(--accent)] text-[var(--text-primary)]'
-                : 'border-transparent text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
-            }`}
-          >
-            好友的书{friendBooks.length > 0 && ` (${friendBooks.length})`}
-          </button>
-        </div>
+      <div className="flex gap-1 mb-6 bg-[var(--bg-secondary)] p-1 rounded-xl w-fit">
+        <button
+          onClick={() => setTab('mine')}
+          className={`px-4 py-2 text-sm rounded-lg border-none cursor-pointer transition-all ${
+            tab === 'mine'
+              ? 'bg-[var(--bg-card)] text-[var(--text-primary)] font-medium shadow-[var(--shadow)]'
+              : 'bg-transparent text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+          }`}
+        >
+          我的书架
+        </button>
+        <button
+          onClick={() => setTab('friends')}
+          className={`px-4 py-2 text-sm rounded-lg border-none cursor-pointer transition-all ${
+            tab === 'friends'
+              ? 'bg-[var(--bg-card)] text-[var(--text-primary)] font-medium shadow-[var(--shadow)]'
+              : 'bg-transparent text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+          }`}
+        >
+          好友的书{friendBooks.length > 0 && ` (${friendBooks.length})`}
+        </button>
       </div>
 
       {tab === 'mine' && (
@@ -98,7 +96,8 @@ export function HomePage() {
           <BookUpload onUploaded={fetchBooks} />
           {books.length === 0 ? (
             <div className="text-center py-16 text-[var(--text-secondary)]">
-              <p className="text-lg mb-2">书架空空如也</p>
+              <p className="text-4xl mb-3 opacity-40">📚</p>
+              <p className="text-lg mb-1">书架空空如也</p>
               <p className="text-sm">上传你的第一本书开始阅读吧</p>
             </div>
           ) : (
@@ -107,17 +106,17 @@ export function HomePage() {
                 <div key={book.id} className="relative group">
                   <button
                     onClick={() => navigate(`/read/${book.id}`)}
-                    className="w-full bg-[var(--bg-card)] rounded-lg p-3 text-left hover:ring-2 hover:ring-[var(--accent)] cursor-pointer border-none transition-all"
+                    className="w-full bg-[var(--bg-card)] rounded-xl p-3 text-left hover:shadow-[var(--shadow-lg)] cursor-pointer border border-[var(--border)] transition-all hover:border-[var(--accent)]"
                   >
-                    <div className="aspect-[3/4] bg-[var(--bg-secondary)] rounded mb-2 flex items-center justify-center">
+                    <div className="aspect-[3/4] bg-[var(--bg-secondary)] rounded-lg mb-2 flex items-center justify-center overflow-hidden">
                       {book.cover_url ? (
                         <img
                           src={book.cover_url}
                           alt={book.title}
-                          className="w-full h-full object-cover rounded"
+                          className="w-full h-full object-cover"
                         />
                       ) : (
-                        <span className="text-3xl">
+                        <span className="text-3xl opacity-30">
                           {book.file_type === 'epub' ? '📖' : '📄'}
                         </span>
                       )}
@@ -126,22 +125,18 @@ export function HomePage() {
                       {book.title}
                     </p>
                     {book.author && (
-                      <p className="text-xs text-[var(--text-secondary)] truncate">
+                      <p className="text-xs text-[var(--text-secondary)] truncate mt-0.5">
                         {book.author}
                       </p>
                     )}
                   </button>
                   <button
                     onClick={(e) => handleToggleShared(e, book)}
-                    className="absolute top-2 right-2 px-2 py-0.5 text-xs rounded-full cursor-pointer border-none transition-colors opacity-0 group-hover:opacity-100"
-                    style={{
-                      backgroundColor: book.is_shared
-                        ? 'var(--accent)'
-                        : 'rgba(255,255,255,0.15)',
-                      color: book.is_shared
-                        ? 'white'
-                        : 'var(--text-secondary)',
-                    }}
+                    className={`absolute top-2 right-2 px-2 py-0.5 text-xs rounded-full cursor-pointer border-none transition-all opacity-0 group-hover:opacity-100 ${
+                      book.is_shared
+                        ? 'bg-[var(--accent)] text-white'
+                        : 'bg-[var(--bg-primary)] text-[var(--text-secondary)] shadow-[var(--shadow)]'
+                    }`}
                     title={book.is_shared ? '点击设为私密' : '点击公开给好友'}
                   >
                     {book.is_shared ? '公开' : '私密'}
@@ -157,7 +152,8 @@ export function HomePage() {
         <div>
           {friendBooks.length === 0 ? (
             <div className="text-center py-16 text-[var(--text-secondary)]">
-              <p className="text-lg mb-2">好友还没有公开的书</p>
+              <p className="text-4xl mb-3 opacity-40">👥</p>
+              <p className="text-lg mb-1">好友还没有公开的书</p>
               <p className="text-sm">添加好友后，他们公开的书会出现在这里</p>
             </div>
           ) : (
@@ -166,17 +162,17 @@ export function HomePage() {
                 <button
                   key={book.id}
                   onClick={() => navigate(`/read/${book.id}`)}
-                  className="bg-[var(--bg-card)] rounded-lg p-3 text-left hover:ring-2 hover:ring-[var(--accent)] cursor-pointer border-none transition-all"
+                  className="bg-[var(--bg-card)] rounded-xl p-3 text-left hover:shadow-[var(--shadow-lg)] cursor-pointer border border-[var(--border)] transition-all hover:border-[var(--accent)]"
                 >
-                  <div className="aspect-[3/4] bg-[var(--bg-secondary)] rounded mb-2 flex items-center justify-center">
+                  <div className="aspect-[3/4] bg-[var(--bg-secondary)] rounded-lg mb-2 flex items-center justify-center overflow-hidden">
                     {book.cover_url ? (
                       <img
                         src={book.cover_url}
                         alt={book.title}
-                        className="w-full h-full object-cover rounded"
+                        className="w-full h-full object-cover"
                       />
                     ) : (
-                      <span className="text-3xl">
+                      <span className="text-3xl opacity-30">
                         {book.file_type === 'epub' ? '📖' : '📄'}
                       </span>
                     )}
@@ -184,7 +180,7 @@ export function HomePage() {
                   <p className="text-sm font-medium truncate text-[var(--text-primary)]">
                     {book.title}
                   </p>
-                  <p className="text-xs text-[var(--text-secondary)] truncate">
+                  <p className="text-xs text-[var(--accent)] truncate mt-0.5">
                     {book.profiles?.display_name}
                   </p>
                 </button>

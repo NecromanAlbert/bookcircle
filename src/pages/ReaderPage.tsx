@@ -59,11 +59,11 @@ export function ReaderPage() {
 
   if (error) {
     return (
-      <div className="flex flex-col items-center justify-center h-screen gap-4">
+      <div className="flex flex-col items-center justify-center h-screen gap-4 bg-[var(--bg-primary)]">
         <p className="text-[var(--text-secondary)]">{error}</p>
         <button
           onClick={() => navigate('/')}
-          className="px-4 py-2 rounded bg-[var(--bg-card)] text-[var(--text-primary)] cursor-pointer border-none hover:bg-[var(--accent)]"
+          className="px-4 py-2 rounded-lg bg-[var(--accent)] text-white cursor-pointer border-none hover:bg-[var(--accent-hover)] transition-colors"
         >
           返回书架
         </button>
@@ -75,20 +75,24 @@ export function ReaderPage() {
   if (book.file_type === 'epub' && !epubData) return <FullPageSpinner />
 
   return (
-    <div className="h-screen flex flex-col">
-      <header className="flex items-center justify-between px-4 py-2 border-b border-white/10 shrink-0">
+    <div className="h-screen flex flex-col bg-[var(--bg-primary)]">
+      <header className="flex items-center justify-between px-4 py-2 bg-[var(--bg-card)] border-b border-[var(--border)] shrink-0 shadow-[var(--shadow)]">
         <button
           onClick={() => navigate('/')}
-          className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] bg-transparent border-none cursor-pointer"
+          className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] bg-transparent border-none cursor-pointer text-sm"
         >
           ← 返回
         </button>
-        <span className="text-sm font-medium truncate max-w-[50%]">
+        <span className="text-sm font-medium truncate max-w-[50%] text-[var(--text-primary)]">
           {book.title}
         </span>
         <button
           onClick={() => setShowSidebar((s) => !s)}
-          className="text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] bg-transparent border-none cursor-pointer"
+          className={`text-sm bg-transparent border-none cursor-pointer transition-colors ${
+            showSidebar
+              ? 'text-[var(--accent)] font-medium'
+              : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+          }`}
         >
           标注 ({annotations.length})
         </button>

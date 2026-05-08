@@ -1,13 +1,17 @@
 @import "tailwindcss";
 
 :root {
-  --bg-primary: #0f0f1a;
-  --bg-secondary: #1a1a2e;
-  --bg-card: #232340;
-  --text-primary: #e2e2f0;
-  --text-secondary: #9898b0;
-  --accent: #6c63ff;
-  --accent-hover: #7b73ff;
+  --bg-primary: #F8F6F3;
+  --bg-secondary: #EDEAE4;
+  --bg-card: #FFFFFF;
+  --text-primary: #2C2416;
+  --text-secondary: #8C7E6F;
+  --accent: #4A6B4A;
+  --accent-hover: #3D5A3D;
+  --accent-warm: #DB9733;
+  --border: #D4CFC7;
+  --shadow: 0 1px 3px rgba(44, 36, 22, 0.06), 0 1px 2px rgba(44, 36, 22, 0.04);
+  --shadow-lg: 0 4px 12px rgba(44, 36, 22, 0.08), 0 2px 4px rgba(44, 36, 22, 0.04);
 }
 
 body {
@@ -20,4 +24,14 @@ body {
 
 * {
   box-sizing: border-box;
+}
+
+::selection {
+  background: rgba(74, 107, 74, 0.2);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-secondary);
+  opacity: 0.7;
 }

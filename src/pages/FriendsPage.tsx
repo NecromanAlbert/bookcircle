@@ -121,20 +121,20 @@ export function FriendsPage() {
 
   return (
     <div>
-      <div className="flex gap-4 mb-6 border-b border-white/10">
+      <div className="flex gap-1 mb-6 bg-[var(--bg-secondary)] p-1 rounded-xl w-fit">
         {tabs.map((t) => (
           <button
             key={t.key}
             onClick={() => setTab(t.key)}
-            className={`pb-2 px-1 text-sm border-b-2 bg-transparent cursor-pointer transition-colors ${
+            className={`px-4 py-2 text-sm rounded-lg border-none cursor-pointer transition-all flex items-center gap-1.5 ${
               tab === t.key
-                ? 'border-[var(--accent)] text-[var(--text-primary)]'
-                : 'border-transparent text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+                ? 'bg-[var(--bg-card)] text-[var(--text-primary)] font-medium shadow-[var(--shadow)]'
+                : 'bg-transparent text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
             }`}
           >
             {t.label}
             {t.badge ? (
-              <span className="ml-1 px-1.5 py-0.5 rounded-full bg-[var(--accent)] text-white text-xs">
+              <span className="px-1.5 py-0.5 rounded-full bg-[var(--accent-warm)] text-white text-xs leading-none">
                 {t.badge}
               </span>
             ) : null}
@@ -146,29 +146,28 @@ export function FriendsPage() {
         <div>
           {friends.length === 0 ? (
             <div className="text-center py-16 text-[var(--text-secondary)]">
-              <p className="text-lg mb-2">还没有好友</p>
-              <p className="text-sm">
-                点击「加好友」搜索并添加好友
-              </p>
+              <p className="text-4xl mb-3 opacity-40">👥</p>
+              <p className="text-lg mb-1">还没有好友</p>
+              <p className="text-sm">点击「加好友」搜索并添加好友</p>
             </div>
           ) : (
             <div className="space-y-2">
               {friends.map((f) => (
                 <div
                   key={f.id}
-                  className="flex items-center justify-between bg-[var(--bg-card)] rounded-lg px-4 py-3"
+                  className="flex items-center justify-between bg-[var(--bg-card)] border border-[var(--border)] rounded-xl px-4 py-3"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-[var(--accent)] flex items-center justify-center text-white font-medium">
+                    <div className="w-10 h-10 rounded-full bg-[var(--accent)] flex items-center justify-center text-white font-medium text-sm">
                       {f.profile.display_name[0]?.toUpperCase()}
                     </div>
-                    <span className="text-[var(--text-primary)]">
+                    <span className="text-[var(--text-primary)] font-medium">
                       {f.profile.display_name}
                     </span>
                   </div>
                   <button
                     onClick={() => handleDelete(f.id, '已删除好友')}
-                    className="text-xs text-[var(--text-secondary)] hover:text-red-400 bg-transparent border-none cursor-pointer"
+                    className="text-xs text-[var(--text-secondary)] hover:text-red-500 bg-transparent border-none cursor-pointer"
                   >
                     删除
                   </button>
@@ -186,36 +185,36 @@ export function FriendsPage() {
               没有待处理的请求
             </p>
           ) : (
-            <div className="space-y-4">
+            <div className="space-y-5">
               {pending.length > 0 && (
                 <div>
-                  <h3 className="text-sm text-[var(--text-secondary)] mb-2">
+                  <h3 className="text-xs font-medium text-[var(--text-secondary)] uppercase tracking-wide mb-2">
                     收到的请求
                   </h3>
                   <div className="space-y-2">
                     {pending.map((p) => (
                       <div
                         key={p.id}
-                        className="flex items-center justify-between bg-[var(--bg-card)] rounded-lg px-4 py-3"
+                        className="flex items-center justify-between bg-[var(--bg-card)] border border-[var(--border)] rounded-xl px-4 py-3"
                       >
                         <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-full bg-[var(--accent)] flex items-center justify-center text-white font-medium">
+                          <div className="w-10 h-10 rounded-full bg-[var(--accent-warm)] flex items-center justify-center text-white font-medium text-sm">
                             {p.profile.display_name[0]?.toUpperCase()}
                           </div>
-                          <span className="text-[var(--text-primary)]">
+                          <span className="text-[var(--text-primary)] font-medium">
                             {p.profile.display_name}
                           </span>
                         </div>
                         <div className="flex gap-2">
                           <button
                             onClick={() => handleAccept(p.id)}
-                            className="px-3 py-1 text-sm text-white bg-[var(--accent)] rounded cursor-pointer border-none hover:bg-[var(--accent-hover)]"
+                            className="px-3 py-1.5 text-sm text-white bg-[var(--accent)] rounded-lg cursor-pointer border-none hover:bg-[var(--accent-hover)] transition-colors"
                           >
                             接受
                           </button>
                           <button
                             onClick={() => handleDelete(p.id, '已拒绝')}
-                            className="px-3 py-1 text-sm text-[var(--text-secondary)] bg-transparent border border-white/10 rounded cursor-pointer hover:text-[var(--text-primary)]"
+                            className="px-3 py-1.5 text-sm text-[var(--text-secondary)] bg-[var(--bg-secondary)] rounded-lg cursor-pointer border-none hover:text-[var(--text-primary)] transition-colors"
                           >
                             拒绝
                           </button>
@@ -227,26 +226,29 @@ export function FriendsPage() {
               )}
               {sent.length > 0 && (
                 <div>
-                  <h3 className="text-sm text-[var(--text-secondary)] mb-2">
+                  <h3 className="text-xs font-medium text-[var(--text-secondary)] uppercase tracking-wide mb-2">
                     已发送的请求
                   </h3>
                   <div className="space-y-2">
                     {sent.map((s) => (
                       <div
                         key={s.id}
-                        className="flex items-center justify-between bg-[var(--bg-card)] rounded-lg px-4 py-3"
+                        className="flex items-center justify-between bg-[var(--bg-card)] border border-[var(--border)] rounded-xl px-4 py-3"
                       >
                         <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-full bg-[var(--bg-secondary)] flex items-center justify-center text-[var(--text-secondary)] font-medium">
+                          <div className="w-10 h-10 rounded-full bg-[var(--bg-secondary)] flex items-center justify-center text-[var(--text-secondary)] font-medium text-sm">
                             {s.profile.display_name[0]?.toUpperCase()}
                           </div>
-                          <span className="text-[var(--text-primary)]">
-                            {s.profile.display_name}
-                          </span>
+                          <div>
+                            <span className="text-[var(--text-primary)]">
+                              {s.profile.display_name}
+                            </span>
+                            <p className="text-xs text-[var(--text-secondary)]">等待对方接受</p>
+                          </div>
                         </div>
                         <button
                           onClick={() => handleDelete(s.id, '已撤回')}
-                          className="text-xs text-[var(--text-secondary)] hover:text-red-400 bg-transparent border-none cursor-pointer"
+                          className="text-xs text-[var(--text-secondary)] hover:text-red-500 bg-transparent border-none cursor-pointer"
                         >
                           撤回
                         </button>
@@ -269,12 +271,12 @@ export function FriendsPage() {
               onChange={(e) => setSearchQuery(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
               placeholder="搜索用户名..."
-              className="flex-1 px-3 py-2 rounded bg-[var(--bg-card)] border border-white/10 text-[var(--text-primary)] placeholder:text-[var(--text-secondary)] outline-none"
+              className="flex-1 px-4 py-2.5 rounded-xl bg-[var(--bg-card)] border border-[var(--border)] text-[var(--text-primary)] outline-none focus:border-[var(--accent)] transition-colors"
             />
             <button
               onClick={handleSearch}
               disabled={searching}
-              className="px-4 py-2 text-sm text-white bg-[var(--accent)] rounded cursor-pointer border-none hover:bg-[var(--accent-hover)] disabled:opacity-50"
+              className="px-5 py-2.5 text-sm text-white bg-[var(--accent)] rounded-xl cursor-pointer border-none hover:bg-[var(--accent-hover)] disabled:opacity-50 transition-colors"
             >
               {searching ? '...' : '搜索'}
             </button>
@@ -285,24 +287,24 @@ export function FriendsPage() {
               {searchResults.map((p) => (
                 <div
                   key={p.id}
-                  className="flex items-center justify-between bg-[var(--bg-card)] rounded-lg px-4 py-3"
+                  className="flex items-center justify-between bg-[var(--bg-card)] border border-[var(--border)] rounded-xl px-4 py-3"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-[var(--accent)] flex items-center justify-center text-white font-medium">
+                    <div className="w-10 h-10 rounded-full bg-[var(--accent)] flex items-center justify-center text-white font-medium text-sm">
                       {p.display_name[0]?.toUpperCase()}
                     </div>
-                    <span className="text-[var(--text-primary)]">
+                    <span className="text-[var(--text-primary)] font-medium">
                       {p.display_name}
                     </span>
                   </div>
                   {allFriendIds.has(p.id) ? (
-                    <span className="text-xs text-[var(--text-secondary)]">
+                    <span className="text-xs text-[var(--text-secondary)] bg-[var(--bg-secondary)] px-3 py-1 rounded-full">
                       已添加
                     </span>
                   ) : (
                     <button
                       onClick={() => handleSendRequest(p.id)}
-                      className="px-3 py-1 text-sm text-white bg-[var(--accent)] rounded cursor-pointer border-none hover:bg-[var(--accent-hover)]"
+                      className="px-3 py-1.5 text-sm text-white bg-[var(--accent)] rounded-lg cursor-pointer border-none hover:bg-[var(--accent-hover)] transition-colors"
                     >
                       加好友
                     </button>

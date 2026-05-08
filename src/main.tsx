@@ -13,9 +13,18 @@ createRoot(document.getElementById('root')!).render(
         position="bottom-center"
         toastOptions={{
           style: {
-            background: '#232340',
-            color: '#e2e2f0',
-            borderRadius: '8px',
+            background: '#FFFFFF',
+            color: '#2C2416',
+            borderRadius: '10px',
+            boxShadow: '0 4px 12px rgba(44, 36, 22, 0.1)',
+            border: '1px solid #EDEAE4',
+            fontSize: '14px',
+          },
+          success: {
+            iconTheme: { primary: '#4A6B4A', secondary: '#fff' },
+          },
+          error: {
+            iconTheme: { primary: '#C0392B', secondary: '#fff' },
           },
         }}
       />
