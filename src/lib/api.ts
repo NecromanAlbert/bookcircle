@@ -116,7 +116,7 @@ export async function getFriendBooks(userId: string): Promise<BookWithOwner[]> {
 
   const { data, error } = await supabase
     .from('books')
-    .select('*, profiles(*)')
+    .select('*, profiles!books_owner_id_fkey(*)')
     .in('owner_id', friendIds)
     .eq('is_shared', true)
     .order('created_at', { ascending: false })
