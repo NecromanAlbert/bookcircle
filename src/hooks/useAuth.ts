@@ -21,14 +21,28 @@ export function useAuth() {
     return () => subscription.unsubscribe()
   }, [])
 
-  const signInWithEmail = async (email: string) => {
-    const { error } = await supabase.auth.signInWithOtp({ email })
+  const signIn = async (email: string, password: string) => {
+    const { error } = await supabase.auth.signInWithPassword({ email, password })
     return { error }
+  }
+
+  const signUp = async (email: string, password: string, displayName: string) => {
+    const { data, error } = await supabase.auth.signUp({ email, password })
+    if (error) return { error }
+
+    if (data.user) {
+      await supabase.from('profiles').upsert({
+        id: data.user.id,
+        display_name: displayName,
+      })
+    }
+
+    return { error: null }
   }
 
   const signOut = async () => {
     await supabase.auth.signOut()
   }
 
-  return { user, loading, signInWithEmail, signOut }
+  return { user, loading, signIn, signUp, signOut }
 }

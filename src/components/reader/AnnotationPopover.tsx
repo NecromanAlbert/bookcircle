@@ -9,7 +9,7 @@ interface Props {
 }
 
 export function AnnotationPopover({ selectedText, position, onSave, onCancel }: Props) {
-  const [color, setColor] = useState(HIGHLIGHT_COLORS[0])
+  const [color, setColor] = useState<string>(HIGHLIGHT_COLORS[0])
   const [note, setNote] = useState('')
 
   return (

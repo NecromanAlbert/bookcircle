@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect } from 'react'
 import { ReactReader } from 'react-reader'
 import { useReaderStore } from '../../stores/readerStore'
-import { createAnnotation, deleteAnnotation, ApiError } from '../../lib/api'
+import { createAnnotation, ApiError } from '../../lib/api'
 import { useAuth } from '../../hooks/useAuth'
 import { AnnotationPopover } from './AnnotationPopover'
 import toast from 'react-hot-toast'
@@ -33,7 +33,8 @@ export function EpubReader({ url, bookId, annotations }: Props) {
 
   useEffect(() => {
     if (!rendition) return
-    rendition.annotations?.removeAll?.()
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ;(rendition.annotations as any)?.removeAll?.()
 
     for (const ann of annotations) {
       if (ann.anchor_type !== 'cfi' || !ann.cfi_range) continue
@@ -125,7 +126,8 @@ export function EpubReader({ url, bookId, annotations }: Props) {
   const handleCancel = () => {
     setSelection(null)
     if (rendition) {
-      const sel = rendition.manager?.container?.ownerDocument?.getSelection()
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const sel = (rendition as any).manager?.container?.ownerDocument?.getSelection()
       sel?.removeAllRanges()
     }
   }
@@ -134,11 +136,11 @@ export function EpubReader({ url, bookId, annotations }: Props) {
     <div className="absolute inset-0" style={{ background: '#0f0f1a', height: '100%' }}>
       <ReactReader
         url={url}
-        location={currentLocation ?? undefined}
+        location={currentLocation ?? null}
         locationChanged={locationChanged}
         getRendition={handleRendition}
         epubOptions={{ allowScriptedContent: false, flow: 'paginated' }}
-        readerStyles={defaultReaderStyles}
+        readerStyles={defaultReaderStyles as any}
         loadingView={<div style={{ color: '#9898b0', textAlign: 'center', padding: '2rem' }}>加载中...</div>}
         errorView={<div style={{ color: '#ff6b6b', textAlign: 'center', padding: '2rem' }}>加载失败，请返回重试</div>}
       />

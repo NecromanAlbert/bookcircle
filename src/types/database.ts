@@ -5,37 +5,50 @@ export interface Database {
         Row: Profile
         Insert: Omit<Profile, 'created_at'>
         Update: Partial<Omit<Profile, 'id'>>
+        Relationships: []
       }
       books: {
         Row: Book
         Insert: Omit<Book, 'id' | 'created_at'>
         Update: Partial<Omit<Book, 'id' | 'owner_id'>>
+        Relationships: []
       }
       circles: {
         Row: Circle
         Insert: Omit<Circle, 'id' | 'created_at' | 'invite_code'>
         Update: Partial<Omit<Circle, 'id' | 'created_by'>>
+        Relationships: []
       }
       circle_members: {
         Row: CircleMember
         Insert: Omit<CircleMember, 'joined_at'>
         Update: Partial<Pick<CircleMember, 'role'>>
+        Relationships: []
       }
       friendships: {
         Row: Friendship
         Insert: Omit<Friendship, 'id' | 'created_at'>
         Update: Partial<Pick<Friendship, 'status'>>
+        Relationships: []
       }
       annotations: {
         Row: Annotation
-        Insert: Omit<Annotation, 'id' | 'created_at' | 'updated_at'>
-        Update: Partial<Omit<Annotation, 'id' | 'user_id' | 'circle_id' | 'book_id'>>
+        Insert: Omit<Annotation, 'id' | 'created_at' | 'updated_at' | 'profiles'>
+        Update: Partial<Omit<Annotation, 'id' | 'user_id' | 'circle_id' | 'book_id' | 'profiles'>>
+        Relationships: []
       }
       reading_progress: {
         Row: ReadingProgress
         Insert: ReadingProgress
         Update: Partial<Omit<ReadingProgress, 'user_id' | 'book_id' | 'circle_id'>>
+        Relationships: []
       }
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      [_ in never]: never
     }
   }
 }

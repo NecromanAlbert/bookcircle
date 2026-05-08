@@ -2,12 +2,13 @@ import { supabase } from './supabase'
 import type { Book, Annotation, Friendship, Profile } from '../types/database'
 
 export class ApiError extends Error {
-  constructor(
-    message: string,
-    public code?: string,
-    public isAuth: boolean = false,
-  ) {
+  code?: string
+  isAuth: boolean
+
+  constructor(message: string, code?: string, isAuth = false) {
     super(message)
+    this.code = code
+    this.isAuth = isAuth
   }
 }
 
